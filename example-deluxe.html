@@ -5,11 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Isabella & David – Wir heiraten!</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="images/favicon-deluxe.png">
 <style>
 :root{--bg:#faf5f3;--surface:#fff;--accent:#b5647a;--accent-light:#d4899b;--accent-soft:rgba(181,100,122,0.08);--text:#2d2024;--text-muted:#7a6068;--border:rgba(181,100,122,0.12);--font-display:'Playfair Display',serif;--font-body:'Outfit',sans-serif}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-height:1.7}
+body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-height:1.7;overflow-x:hidden}
 a{text-decoration:none;color:inherit}
 .back-bar{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(250,245,243,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:10px 24px}
 .back-bar a{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:var(--text-muted);transition:0.3s}
@@ -18,6 +19,14 @@ a{text-decoration:none;color:inherit}
 .nav-inner{max-width:900px;margin:0 auto;padding:0 24px;display:flex;justify-content:center;gap:24px;flex-wrap:wrap}
 .nav-inner a{font-size:13px;font-weight:500;color:var(--text-muted);padding:14px 0;border-bottom:2px solid transparent;transition:0.3s}
 .nav-inner a:hover{color:var(--accent);border-bottom-color:var(--accent)}
+.mobile-menu-toggle{display:none;background:none;border:none;cursor:pointer;width:24px;height:18px;position:absolute;right:24px;top:12px;z-index:50}
+.mobile-menu-toggle span{display:block;width:100%;height:2px;background:var(--text);position:absolute;left:0;transition:0.3s}
+.mobile-menu-toggle span:nth-child(1){top:0}
+.mobile-menu-toggle span:nth-child(2){top:50%;transform:translateY(-50%)}
+.mobile-menu-toggle span:nth-child(3){bottom:0}
+.mobile-menu-toggle.active span:nth-child(1){top:50%;transform:translateY(-50%) rotate(45deg)}
+.mobile-menu-toggle.active span:nth-child(2){opacity:0}
+.mobile-menu-toggle.active span:nth-child(3){bottom:50%;transform:translateY(50%) rotate(-45deg)}
 
 /* Password Overlay */
 .pw-overlay{position:fixed;inset:0;z-index:200;background:var(--bg);display:flex;align-items:center;justify-content:center;transition:opacity 0.5s}
@@ -101,7 +110,14 @@ a{text-decoration:none;color:inherit}
 .gallery-grid .g-item:hover img{transform:scale(1.08)}
 .lightbox{position:fixed;inset:0;z-index:300;background:rgba(0,0,0,0.9);display:none;align-items:center;justify-content:center;padding:40px;cursor:pointer}
 .lightbox.active{display:flex}
-.lightbox img{max-width:90%;max-height:90vh;border-radius:8px;object-fit:contain}
+.lightbox img{max-width:90%;max-height:90vh;border-radius:8px;object-fit:contain;user-select:none;position:relative;z-index:2}
+.lb-btn{position:absolute;background:rgba(255,255,255,0.1);color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:0.3s;border-radius:50%;z-index:3;backdrop-filter:blur(4px)}
+.lb-btn:hover{background:rgba(255,255,255,0.3)}
+.lb-prev,.lb-next{top:50%;transform:translateY(-50%);width:50px;height:50px;font-size:32px;padding-bottom:4px}
+.lb-prev{left:20px}
+.lb-next{right:20px}
+.lb-close{top:20px;right:20px;width:40px;height:40px;font-size:28px}
+@media(max-width:768px){.lb-prev,.lb-next{width:40px;height:40px;font-size:24px}.lb-prev{left:10px}.lb-next{right:10px}}
 
 /* Guestbook */
 .gb-entries{max-width:600px;margin:0 auto 32px}
@@ -122,7 +138,7 @@ a{text-decoration:none;color:inherit}
 .demo-banner{font-size:11px;color:var(--text-muted);margin-top:16px}
 .demo-banner a{color:var(--accent);font-weight:600}
 
-@media(max-width:768px){.info-grid,.two-col{grid-template-columns:1fr}.party-grid{grid-template-columns:repeat(2,1fr)}.form-row{grid-template-columns:1fr}.gallery-grid{grid-template-columns:repeat(2,1fr)}.nav-inner{gap:12px}}
+@media(max-width:768px){.info-grid,.two-col{grid-template-columns:1fr}.party-grid{grid-template-columns:repeat(2,1fr)}.form-row{grid-template-columns:1fr}.gallery-grid{grid-template-columns:repeat(2,1fr)}.mobile-menu-toggle{display:block}.nav-inner{position:fixed;top:0;right:-100%;width:260px;height:100vh;background:var(--surface);flex-direction:column;flex-wrap:nowrap;justify-content:flex-start;align-items:center;gap:32px;transition:right 0.4s ease;box-shadow:-5px 0 30px rgba(0,0,0,0.05);padding:100px 0 40px;z-index:45;overflow-y:auto;overflow-x:hidden}.nav-inner.active{right:0}.radio-group{flex-direction:column;gap:12px}.hero-countdown{gap:16px}.cd-num{font-size:28px}}
 </style>
 </head>
 <body>
@@ -135,13 +151,15 @@ a{text-decoration:none;color:inherit}
 <input type="password" id="pwInput" placeholder="Passwort eingeben" autofocus>
 <button onclick="checkPw()">Zugang erhalten</button>
 <div class="pw-error" id="pwError">Falsches Passwort. Bitte versuchen Sie es erneut.</div>
-<p style="font-size:11px;color:var(--text-muted);margin-top:16px">Demo-Passwort: <strong>liebe2025</strong></p>
+<p style="font-size:11px;color:var(--text-muted);margin-top:16px">Demo-Passwort: <strong>liebe2027</strong></p>
 </div>
 </div>
 
 <div class="back-bar"><a href="index.html"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Zurück zur Paketübersicht</a></div>
 
-<nav class="site-nav"><div class="nav-inner">
+<nav class="site-nav">
+<button class="mobile-menu-toggle" aria-label="Menu öffnen"><span></span><span></span><span></span></button>
+<div class="nav-inner">
 <a href="#home">Home</a><a href="#timeline">Tagesablauf</a><a href="#anreise">Anreise</a><a href="#party">Trauzeugen</a><a href="#details">Details</a><a href="#rsvp">RSVP</a><a href="#gallery">Galerie</a><a href="#guestbook">Gästebuch</a>
 </div></nav>
 
@@ -152,7 +170,7 @@ a{text-decoration:none;color:inherit}
 <div class="hero-inner">
 <div class="hero-tag">Wir heiraten</div>
 <h1>Isabella <span class="amp">&amp;</span> David</h1>
-<div class="hero-date">Samstag, 12. April 2025</div>
+<div class="hero-date">Samstag, 19. Juni 2027</div>
 <div class="hero-venue">Botanischer Garten, Luzern</div>
 <div class="hero-countdown">
 <div class="cd-item"><div class="cd-num" id="cdDays">--</div><div class="cd-lbl">Tage</div></div>
@@ -165,7 +183,7 @@ a{text-decoration:none;color:inherit}
 
 <section class="section alt" id="timeline"><div class="section-inner">
 <h2 class="section-title">Tagesablauf</h2>
-<div class="section-sub">Samstag, 12. April 2025</div>
+<div class="section-sub">Samstag, 19. Juni 2027</div>
 <div class="timeline">
 <div class="tl-item"><div class="tl-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div class="tl-time">13:00 Uhr</div><div class="tl-title">Empfang</div><div class="tl-desc">Willkommen im Botanischen Garten</div></div>
 <div class="tl-item"><div class="tl-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div><div class="tl-time">14:00 Uhr</div><div class="tl-title">Trauung</div><div class="tl-desc">Freie Zeremonie im Rosengarten</div></div>
@@ -209,7 +227,7 @@ a{text-decoration:none;color:inherit}
 
 <section class="section alt" id="rsvp"><div class="section-inner">
 <h2 class="section-title">RSVP</h2>
-<div class="section-sub">Bitte antwortet bis zum 1. März 2025</div>
+<div class="section-sub">Bitte antwortet bis zum 19. Mai 2027</div>
 <form class="rsvp-form" onsubmit="event.preventDefault();alert('Vielen Dank! (Demo)');">
 <div class="form-row"><div class="form-group"><label for="dName">Vorname</label><input type="text" id="dName" placeholder="Vorname" required></div><div class="form-group"><label for="dLast">Nachname</label><input type="text" id="dLast" placeholder="Nachname" required></div></div>
 <div class="form-group"><label for="dEmail">E-Mail</label><input type="email" id="dEmail" placeholder="E-Mail" required></div>
@@ -232,17 +250,22 @@ a{text-decoration:none;color:inherit}
 <h2 class="section-title">Fotogalerie</h2>
 <div class="section-sub">Passwortgeschützt – nur für unsere Gäste</div>
 <div class="gallery-grid">
-<div class="g-item" onclick="openLB(this)"><img src="images/gallery1.png" alt="Trauung"></div>
-<div class="g-item" onclick="openLB(this)"><img src="images/gallery2.png" alt="Brautpaar"></div>
-<div class="g-item" onclick="openLB(this)"><img src="images/gallery3.png" alt="Eröffnungstanz"></div>
-<div class="g-item" onclick="openLB(this)"><img src="images/gallery4.png" alt="Brautstrauss"></div>
-<div class="g-item" onclick="openLB(this)"><img src="images/gallery5.png" alt="Hochzeitstorte"></div>
-<div class="g-item" onclick="openLB(this)"><img src="images/gallery6.png" alt="Eheringe"></div>
-<div class="g-item" onclick="openLB(this)"><img src="images/gallery7.png" alt="Tischdekoration"></div>
-<div class="g-item" onclick="openLB(this)"><img src="images/gallery8.png" alt="Gäste"></div>
-<div class="g-item" onclick="openLB(this)"><img src="images/gallery9.png" alt="Sonnenuntergang"></div>
+<div class="g-item"><img src="images/gallery1.png" alt="Trauung"></div>
+<div class="g-item"><img src="images/gallery2.png" alt="Brautpaar"></div>
+<div class="g-item"><img src="images/gallery3.png" alt="Eröffnungstanz"></div>
+<div class="g-item"><img src="images/gallery4.png" alt="Brautstrauss"></div>
+<div class="g-item"><img src="images/gallery5.png" alt="Hochzeitstorte"></div>
+<div class="g-item"><img src="images/gallery6.png" alt="Eheringe"></div>
+<div class="g-item"><img src="images/gallery7.png" alt="Tischdekoration"></div>
+<div class="g-item"><img src="images/gallery8.png" alt="Gäste"></div>
+<div class="g-item"><img src="images/gallery9.png" alt="Sonnenuntergang"></div>
 </div>
-<div class="lightbox" id="lightbox" onclick="this.classList.remove('active')"><img id="lbImg" src="" alt=""></div>
+<div class="lightbox" id="lightbox">
+<button class="lb-btn lb-prev" id="lbPrev">&lsaquo;</button>
+<img id="lbImg" src="" alt="">
+<button class="lb-btn lb-next" id="lbNext">&rsaquo;</button>
+<button class="lb-btn lb-close" id="lbClose">&times;</button>
+</div>
 </section>
 
 <!-- Guestbook -->
@@ -250,8 +273,8 @@ a{text-decoration:none;color:inherit}
 <h2 class="section-title">Gästebuch</h2>
 <div class="section-sub">Hinterlasst uns eine Nachricht</div>
 <div class="gb-entries">
-<div class="gb-entry"><div class="gb-author">Laura & Thomas</div><div class="gb-date">14. April 2025</div><div class="gb-text">Was für ein wunderschöner Tag! Wir sind so glücklich für euch beide. Alles Liebe für eure gemeinsame Zukunft!</div></div>
-<div class="gb-entry"><div class="gb-author">Familie Brunner</div><div class="gb-date">13. April 2025</div><div class="gb-text">Die schönste Hochzeit, die wir je erleben durften. Danke, dass wir dabei sein durften!</div></div>
+<div class="gb-entry"><div class="gb-author">Laura & Thomas</div><div class="gb-date">21. Juni 2027</div><div class="gb-text">Was für ein wunderschöner Tag! Wir sind so glücklich für euch beide. Alles Liebe für eure gemeinsame Zukunft!</div></div>
+<div class="gb-entry"><div class="gb-author">Familie Brunner</div><div class="gb-date">20. Juni 2027</div><div class="gb-text">Die schönste Hochzeit, die wir je erleben durften. Danke, dass wir dabei sein durften!</div></div>
 </div>
 <form class="gb-form" onsubmit="event.preventDefault();alert('Eintrag gespeichert! (Demo)');">
 <div class="form-group"><label for="gbName">Euer Name</label><input type="text" id="gbName" placeholder="Vor- und Nachname" required></div>
@@ -262,16 +285,59 @@ a{text-decoration:none;color:inherit}
 
 <footer class="site-footer">
 <div class="footer-names">Isabella & David</div>
-<p>12. April 2025 &middot; Luzern</p>
+<p>19. Juni 2027 &middot; Luzern</p>
 <div class="demo-banner">Dies ist eine Demo-Webseite &middot; <a href="index.html">Paket Deluxe</a> von Gross ICT</div>
 </footer>
 
 <script>
-function openLB(el){var img=el.querySelector('img');document.getElementById('lbImg').src=img.src;document.getElementById('lightbox').classList.add('active')}
-function checkPw(){var p=document.getElementById('pwInput').value;if(p==='liebe2025'){document.getElementById('pwOverlay').classList.add('hidden')}else{document.getElementById('pwError').style.display='block'}}
+var currentImgIndex = 0;
+var galleryItems = Array.from(document.querySelectorAll('.g-item img'));
+var lightbox = document.getElementById('lightbox');
+var lbImg = document.getElementById('lbImg');
+
+function showImg(index) {
+    currentImgIndex = (index + galleryItems.length) % galleryItems.length;
+    lbImg.src = galleryItems[currentImgIndex].src;
+}
+
+document.querySelectorAll('.g-item').forEach(function(item, index) {
+    item.addEventListener('click', function() {
+        showImg(index);
+        lightbox.classList.add('active');
+    });
+});
+
+document.getElementById('lbPrev').addEventListener('click', function(e) { e.stopPropagation(); showImg(currentImgIndex - 1); });
+document.getElementById('lbNext').addEventListener('click', function(e) { e.stopPropagation(); showImg(currentImgIndex + 1); });
+document.getElementById('lbClose').addEventListener('click', function(e) { e.stopPropagation(); lightbox.classList.remove('active'); });
+
+lightbox.addEventListener('click', function(e) {
+    if(e.target === lightbox || e.target === lbImg) {
+        lightbox.classList.remove('active');
+    }
+});
+
+document.addEventListener('keydown', function(e) {
+    if(!lightbox.classList.contains('active')) return;
+    if(e.key === 'ArrowLeft') showImg(currentImgIndex - 1);
+    else if(e.key === 'ArrowRight') showImg(currentImgIndex + 1);
+    else if(e.key === 'Escape') lightbox.classList.remove('active');
+});
+
+var touchStartX = 0;
+lightbox.addEventListener('touchstart', function(e) { touchStartX = e.changedTouches[0].clientX; });
+lightbox.addEventListener('touchend', function(e) {
+    var touchEndX = e.changedTouches[0].clientX;
+    var swipeThreshold = 40;
+    if (touchStartX - touchEndX > swipeThreshold) showImg(currentImgIndex + 1);
+    if (touchEndX - touchStartX > swipeThreshold) showImg(currentImgIndex - 1);
+});
+function checkPw(){var p=document.getElementById('pwInput').value;if(p==='liebe2027'){document.getElementById('pwOverlay').classList.add('hidden')}else{document.getElementById('pwError').style.display='block'}}
 document.getElementById('pwInput').addEventListener('keydown',function(e){if(e.key==='Enter')checkPw()});
-function updateCountdown(){var w=new Date('2025-04-12T14:00:00'),n=new Date(),d=w-n;if(d<=0){document.querySelectorAll('.cd-num').forEach(function(e){e.textContent='0'});return}document.getElementById('cdDays').textContent=Math.floor(d/86400000);document.getElementById('cdHours').textContent=Math.floor((d%86400000)/3600000);document.getElementById('cdMinutes').textContent=Math.floor((d%3600000)/60000);document.getElementById('cdSeconds').textContent=Math.floor((d%60000)/1000)}
+function updateCountdown(){var w=new Date('2027-06-19T14:00:00'),n=new Date(),d=w-n;if(d<=0){document.querySelectorAll('.cd-num').forEach(function(e){e.textContent='0'});return}document.getElementById('cdDays').textContent=Math.floor(d/86400000);document.getElementById('cdHours').textContent=Math.floor((d%86400000)/3600000);document.getElementById('cdMinutes').textContent=Math.floor((d%3600000)/60000);document.getElementById('cdSeconds').textContent=Math.floor((d%60000)/1000)}
 updateCountdown();setInterval(updateCountdown,1000);
+var tg=document.querySelector('.mobile-menu-toggle'),ni=document.querySelector('.nav-inner');
+if(tg&&ni){tg.addEventListener('click',function(){tg.classList.toggle('active');ni.classList.toggle('active')});ni.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){tg.classList.remove('active');ni.classList.remove('active')})});}
 </script>
 </body>
 </html>

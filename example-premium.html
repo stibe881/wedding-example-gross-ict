@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Olivia & James – Wir heiraten!</title>
-    <meta name="description" content="Hochzeitswebseite von Olivia und James. 8. März 2025 – The Art Museum, Bern.">
+    <meta name="description" content="Hochzeitswebseite von Olivia und James. 19. Juni 2027 – The Art Museum, Bern.">
+    <link rel="icon" type="image/png" href="images/favicon-premium.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
@@ -24,7 +25,7 @@
         }
         *,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
         html { scroll-behavior: smooth; }
-        body { font-family: var(--font-body); background: var(--bg); color: var(--text); line-height: 1.7; }
+        body { font-family: var(--font-body); background: var(--bg); color: var(--text); line-height: 1.7; overflow-x: hidden; }
         a { text-decoration: none; color: inherit; }
 
         /* Back Bar */
@@ -55,6 +56,21 @@
             transition: 0.3s; letter-spacing: 0.5px;
         }
         .nav-inner a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+        
+        .mobile-menu-toggle {
+            display: none; background: none; border: none; cursor: pointer;
+            width: 24px; height: 18px; position: absolute; right: 24px; top: 12px; z-index: 50;
+        }
+        .mobile-menu-toggle span {
+            display: block; width: 100%; height: 2px; background: var(--text);
+            position: absolute; left: 0; transition: 0.3s;
+        }
+        .mobile-menu-toggle span:nth-child(1) { top: 0; }
+        .mobile-menu-toggle span:nth-child(2) { top: 50%; transform: translateY(-50%); }
+        .mobile-menu-toggle span:nth-child(3) { bottom: 0; }
+        .mobile-menu-toggle.active span:nth-child(1) { top: 50%; transform: translateY(-50%) rotate(45deg); }
+        .mobile-menu-toggle.active span:nth-child(2) { opacity: 0; }
+        .mobile-menu-toggle.active span:nth-child(3) { bottom: 50%; transform: translateY(50%) rotate(-45deg); }
 
         /* Hero */
         .hero {
@@ -237,7 +253,20 @@
             .info-grid, .two-col { grid-template-columns: 1fr; }
             .party-grid { grid-template-columns: repeat(2, 1fr); }
             .form-row { grid-template-columns: 1fr; }
-            .nav-inner { gap: 16px; flex-wrap: wrap; }
+            
+            .mobile-menu-toggle { display: block; }
+            .nav-inner { 
+                position: fixed; top: 0; right: -100%; width: 260px; height: 100vh;
+                background: var(--surface); flex-direction: column; flex-wrap: nowrap;
+                justify-content: flex-start; align-items: center; gap: 32px;
+                transition: right 0.4s ease; box-shadow: -5px 0 30px rgba(0,0,0,0.05);
+                padding: 100px 0 40px; z-index: 45; overflow-y: auto; overflow-x: hidden;
+            }
+            .nav-inner.active { right: 0; }
+
+            .radio-group { flex-direction: column; gap: 12px; }
+            .hero-countdown { gap: 16px; }
+            .cd-num { font-size: 28px; }
         }
     </style>
 </head>
@@ -251,6 +280,9 @@
     </div>
 
     <nav class="site-nav">
+        <button class="mobile-menu-toggle" aria-label="Menu öffnen">
+            <span></span><span></span><span></span>
+        </button>
         <div class="nav-inner">
             <a href="#home">Home</a>
             <a href="#timeline">Tagesablauf</a>
@@ -266,7 +298,7 @@
         <div class="hero-inner">
             <div class="hero-tag">Wir heiraten</div>
             <h1>Olivia <span class="amp">&</span> James</h1>
-            <div class="hero-date">Samstag, 8. März 2025</div>
+            <div class="hero-date">Samstag, 19. Juni 2027</div>
             <div class="hero-venue">The Art Museum, Bern</div>
             <div class="hero-countdown">
                 <div class="cd-item"><div class="cd-num" id="cdDays">--</div><div class="cd-lbl">Tage</div></div>
@@ -281,7 +313,7 @@
     <section class="section alt" id="timeline">
         <div class="section-inner">
             <h2 class="section-title">Tagesablauf</h2>
-            <div class="section-sub">Samstag, 8. März 2025</div>
+            <div class="section-sub">Samstag, 19. Juni 2027</div>
             <div class="timeline">
                 <div class="tl-item">
                     <div class="tl-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
@@ -394,7 +426,7 @@
     <section class="section alt" id="rsvp">
         <div class="section-inner">
             <h2 class="section-title">RSVP</h2>
-            <div class="section-sub">Bitte antwortet bis zum 1. Februar 2025</div>
+            <div class="section-sub">Bitte antwortet bis zum 19. Mai 2027</div>
             <form class="rsvp-form" onsubmit="event.preventDefault(); alert('Vielen Dank! (Demo)');">
                 <div class="form-row">
                     <div class="form-group">
@@ -451,7 +483,7 @@
     <!-- Footer -->
     <footer class="site-footer">
         <div class="footer-names">Olivia & James</div>
-        <p>8. März 2025 &middot; Bern</p>
+        <p>19. Juni 2027 &middot; Bern</p>
         <div class="demo-banner">
             Dies ist eine Demo-Webseite &middot; <a href="index.html">Paket Premium</a> von Gross ICT
         </div>
@@ -459,7 +491,7 @@
 
     <script>
         function updateCountdown() {
-            const wedding = new Date('2025-03-08T14:00:00');
+            const wedding = new Date('2027-06-19T14:00:00');
             const now = new Date();
             const diff = wedding - now;
             if (diff <= 0) { document.querySelectorAll('.cd-num').forEach(e => e.textContent = '0'); return; }
@@ -470,6 +502,21 @@
         }
         updateCountdown();
         setInterval(updateCountdown, 1000);
+
+        const toggle = document.querySelector('.mobile-menu-toggle');
+        const navInner = document.querySelector('.nav-inner');
+        if(toggle && navInner) {
+            toggle.addEventListener('click', () => {
+                toggle.classList.toggle('active');
+                navInner.classList.toggle('active');
+            });
+            navInner.querySelectorAll('a').forEach(a => {
+                a.addEventListener('click', () => {
+                    toggle.classList.remove('active');
+                    navInner.classList.remove('active');
+                });
+            });
+        }
     </script>
 </body>
 </html>

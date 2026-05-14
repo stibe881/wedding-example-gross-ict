@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sarah & Michael – Wir heiraten!</title>
-    <meta name="description" content="Hochzeitswebseite von Sarah und Michael. 15. Juni 2025 – The Grand Estate, Zürich.">
+    <meta name="description" content="Hochzeitswebseite von Sarah und Michael. 19. Juni 2027 – The Grand Estate, Zürich.">
+    <link rel="icon" type="image/png" href="images/favicon-basic.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -22,7 +23,7 @@
         }
         *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
         html { scroll-behavior: smooth; }
-        body { font-family: var(--font-body); background: var(--bg); color: var(--text); line-height: 1.7; }
+        body { font-family: var(--font-body); background: var(--bg); color: var(--text); line-height: 1.7; overflow-x: hidden; }
         a { text-decoration: none; color: inherit; }
 
         /* Back Link */
@@ -220,8 +221,11 @@
 
         @media (max-width: 600px) {
             .info-grid { grid-template-columns: 1fr; gap: 20px; }
-            .countdown { gap: 20px; }
+            .countdown { gap: 20px; justify-content: center; }
+            .countdown-item { min-width: 70px; }
             .countdown-number { font-size: 40px; }
+            .radio-group { flex-direction: column; gap: 12px; }
+            .hero::before, .hero::after { display: none; }
         }
     </style>
 </head>
@@ -239,7 +243,7 @@
         <div class="ornament">&#8226; &#8226; &#8226;</div>
         <div class="hero-tag">Wir heiraten</div>
         <h1>Sarah <span class="amp">&</span> Michael</h1>
-        <div class="hero-date">Sonntag, 15. Juni 2025</div>
+        <div class="hero-date">Samstag, 19. Juni 2027</div>
         <div class="hero-venue">The Grand Estate, Zürich</div>
     </section>
 
@@ -278,7 +282,7 @@
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
                 </div>
                 <h3>Zeremonie</h3>
-                <p>Sonntag, 15. Juni 2025<br>14:00 Uhr</p>
+                <p>Samstag, 19. Juni 2027<br>14:00 Uhr</p>
             </div>
             <div class="info-card">
                 <div class="info-icon">
@@ -307,7 +311,7 @@
     <!-- RSVP -->
     <section class="rsvp-section" id="rsvp">
         <h2>Antwort</h2>
-        <div class="rsvp-subtitle">Bitte antwortet bis zum 15. Mai 2025</div>
+        <div class="rsvp-subtitle">Bitte antwortet bis zum 19. Mai 2027</div>
         <form class="rsvp-form" id="rsvpForm" onsubmit="event.preventDefault(); alert('Vielen Dank für Ihre Antwort! (Demo)');">
             <div class="form-group">
                 <label for="rsvpName">Vor- und Nachname</label>
@@ -340,7 +344,7 @@
     <!-- Footer -->
     <footer class="site-footer">
         <div class="footer-names">Sarah & Michael</div>
-        <p>15. Juni 2025 &middot; Zürich</p>
+        <p>19. Juni 2027 &middot; Zürich</p>
         <div class="demo-banner">
             Dies ist eine Demo-Webseite &middot; <a href="index.html">Paket Basic</a> von Gross ICT
         </div>
@@ -349,7 +353,7 @@
     <script>
         // Countdown
         function updateCountdown() {
-            const wedding = new Date('2025-06-15T14:00:00');
+            const wedding = new Date('2027-06-19T14:00:00');
             const now = new Date();
             const diff = wedding - now;
             if (diff <= 0) {
