@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wedding Pages – Ihre persönliche Hochzeitswebseite</title>
+    <meta name="description" content="Entdecken Sie unsere Hochzeitswebseiten-Pakete. Basic, Premium oder Deluxe – finden Sie die perfekte Webseite für Ihren grossen Tag.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="main-nav" id="mainNav">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">
+                <span class="logo-icon">W</span>
+                <span class="logo-text">Wedding Pages</span>
+            </a>
+            <div class="nav-links">
+                <a href="#packages" class="nav-link">Pakete</a>
+                <a href="#contact" class="nav-link nav-cta">Kontakt</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero" id="hero">
+        <div class="hero-content">
+            <div class="hero-badge">Ihre Traumhochzeit verdient eine Traumwebseite</div>
+            <h1 class="hero-title">
+                <span class="title-line">Wunderschöne</span>
+                <span class="title-line accent">Hochzeitswebseiten</span>
+                <span class="title-line">für Ihren grossen Tag</span>
+            </h1>
+            <p class="hero-subtitle">
+                Beeindrucken Sie Ihre Gäste mit einer massgeschneiderten Hochzeitswebseite.
+                Wählen Sie aus drei Paketen – von schlicht und schön bis umfassend und luxuriös.
+            </p>
+            <div class="hero-actions">
+                <a href="#packages" class="btn btn-primary" id="btnExplore">
+                    <span>Pakete entdecken</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17l9.2-9.2M17 17V8H8"/></svg>
+                </a>
+                <a href="#contact" class="btn btn-secondary" id="btnContact">Kontakt aufnehmen</a>
+            </div>
+        </div>
+        <div class="hero-scroll-indicator">
+            <span>Scrollen Sie nach unten</span>
+            <div class="scroll-arrow"></div>
+        </div>
+    </header>
+
+    <!-- Packages Section -->
+    <section class="packages-section" id="packages">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-tag">Unsere Pakete</span>
+                <h2 class="section-title">Finden Sie Ihr perfektes Paket</h2>
+                <p class="section-desc">Jede Hochzeit ist einzigartig. Entdecken Sie drei Pakete und klicken Sie auf «Beispiel ansehen», um eine voll funktionale Demo-Webseite zu erleben.</p>
+            </div>
+
+            <div class="packages-grid">
+                <!-- Basic -->
+                <article class="package-card" id="cardBasic">
+                    <div class="card-image-wrapper">
+                        <img src="images/wedding_classic.png" alt="Basic Hochzeitswebseite – Sarah und Michael" class="card-image" loading="lazy">
+                        <div class="card-overlay">
+                            <a href="example-basic.html" class="card-view-btn" id="btnViewBasic">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                <span>Beispiel ansehen</span>
+                            </a>
+                        </div>
+                        <div class="card-badge badge-basic">Basic</div>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-package-name basic">Paket 1 – Basic</div>
+                        <h3 class="card-title">Sarah & Michael</h3>
+                        <p class="card-description">Einfacher One-Pager – ideal für Paare mit kleinem Budget oder als digitaler Vorab-Flyer.</p>
+                        <ul class="card-features-list">
+                            <li><span class="check-icon basic">&#10003;</span> Einfacher One-Pager (Landingpage)</li>
+                            <li><span class="check-icon basic">&#10003;</span> Countdown bis zur Hochzeit</li>
+                            <li><span class="check-icon basic">&#10003;</span> Die wichtigsten Daten (Wann & Wo)</li>
+                            <li><span class="check-icon basic">&#10003;</span> Einfaches RSVP-Formular</li>
+                        </ul>
+                        <a href="example-basic.html" class="card-link basic" id="linkBasic">
+                            Beispiel ansehen
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Premium -->
+                <article class="package-card featured" id="cardPremium">
+                    <div class="card-image-wrapper">
+                        <img src="images/wedding_modern.png" alt="Premium Hochzeitswebseite – Olivia und James" class="card-image" loading="lazy">
+                        <div class="card-overlay">
+                            <a href="example-premium.html" class="card-view-btn" id="btnViewPremium">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                <span>Beispiel ansehen</span>
+                            </a>
+                        </div>
+                        <div class="card-badge badge-premium">Premium</div>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-package-name premium">Paket 2 – Premium</div>
+                        <h3 class="card-title">Olivia & James</h3>
+                        <p class="card-description">Ausführlicher One-Pager mit Navigation – perfekt für Paare, die mehr Informationen teilen möchten.</p>
+                        <ul class="card-features-list">
+                            <li><span class="check-icon premium">&#10003;</span> Alles aus Basic</li>
+                            <li><span class="check-icon premium">&#10003;</span> Tagesablauf / Timeline</li>
+                            <li><span class="check-icon premium">&#10003;</span> Anreise, Parkplätze & Hotels</li>
+                            <li><span class="check-icon premium">&#10003;</span> Dresscode & Geschenkwünsche</li>
+                            <li><span class="check-icon premium">&#10003;</span> Trauzeugen / Bridal Party</li>
+                            <li><span class="check-icon premium">&#10003;</span> Erweitertes RSVP</li>
+                        </ul>
+                        <a href="example-premium.html" class="card-link premium" id="linkPremium">
+                            Beispiel ansehen
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Deluxe -->
+                <article class="package-card" id="cardDeluxe">
+                    <div class="card-image-wrapper">
+                        <img src="images/wedding_floral.png" alt="Deluxe Hochzeitswebseite – Isabella und David" class="card-image" loading="lazy">
+                        <div class="card-overlay">
+                            <a href="example-deluxe.html" class="card-view-btn" id="btnViewDeluxe">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                <span>Beispiel ansehen</span>
+                            </a>
+                        </div>
+                        <div class="card-badge badge-deluxe">Deluxe</div>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-package-name deluxe">Paket 3 – Deluxe</div>
+                        <h3 class="card-title">Isabella & David</h3>
+                        <p class="card-description">Das Rundum-Sorglos-Paket mit exklusiven Funktionen für einen unvergesslichen digitalen Auftritt.</p>
+                        <ul class="card-features-list">
+                            <li><span class="check-icon deluxe">&#10003;</span> Alles aus Premium</li>
+                            <li><span class="check-icon deluxe">&#10003;</span> Passwortschutz</li>
+                            <li><span class="check-icon deluxe">&#10003;</span> Digitale Dankeskarte</li>
+                            <li><span class="check-icon deluxe">&#10003;</span> Online-Fotogalerie</li>
+                            <li><span class="check-icon deluxe">&#10003;</span> Gästebuch-Funktion</li>
+                        </ul>
+                        <a href="example-deluxe.html" class="card-link deluxe" id="linkDeluxe">
+                            Beispiel ansehen
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section" id="contact">
+        <div class="section-container">
+            <div class="cta-content">
+                <span class="section-tag">Bereit loszulegen?</span>
+                <h2 class="cta-title">Lassen Sie uns Ihre Traumwebseite gestalten</h2>
+                <p class="cta-desc">Kontaktieren Sie uns für ein unverbindliches Beratungsgespräch. Wir freuen uns darauf, Ihre Vision zum Leben zu erwecken.</p>
+                <a href="mailto:info@grossict.ch" class="btn btn-primary btn-large" id="btnCTA">
+                    <span>Jetzt anfragen</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <span class="logo-icon">W</span>
+                <span class="logo-text">Wedding Pages</span>
+            </div>
+            <p class="footer-text">&copy; 2025 Gross ICT – Alle Rechte vorbehalten</p>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html>

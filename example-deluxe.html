@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Isabella & David – Wir heiraten!</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#faf5f3;--surface:#fff;--accent:#b5647a;--accent-light:#d4899b;--accent-soft:rgba(181,100,122,0.08);--text:#2d2024;--text-muted:#7a6068;--border:rgba(181,100,122,0.12);--font-display:'Playfair Display',serif;--font-body:'Outfit',sans-serif}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-height:1.7}
+a{text-decoration:none;color:inherit}
+.back-bar{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(250,245,243,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:10px 24px}
+.back-bar a{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:var(--text-muted);transition:0.3s}
+.back-bar a:hover{color:var(--accent)}
+.site-nav{position:fixed;top:41px;left:0;right:0;z-index:40;background:rgba(255,255,255,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:900px;margin:0 auto;padding:0 24px;display:flex;justify-content:center;gap:24px;flex-wrap:wrap}
+.nav-inner a{font-size:13px;font-weight:500;color:var(--text-muted);padding:14px 0;border-bottom:2px solid transparent;transition:0.3s}
+.nav-inner a:hover{color:var(--accent);border-bottom-color:var(--accent)}
+
+/* Password Overlay */
+.pw-overlay{position:fixed;inset:0;z-index:200;background:var(--bg);display:flex;align-items:center;justify-content:center;transition:opacity 0.5s}
+.pw-overlay.hidden{opacity:0;pointer-events:none}
+.pw-box{text-align:center;max-width:400px;padding:40px}
+.pw-box h2{font-family:var(--font-display);font-size:28px;margin-bottom:8px}
+.pw-box p{font-size:14px;color:var(--text-muted);margin-bottom:24px}
+.pw-box input{width:100%;padding:14px 16px;border:1px solid var(--border);border-radius:8px;font-family:var(--font-body);font-size:14px;text-align:center;outline:none;margin-bottom:12px}
+.pw-box input:focus{border-color:var(--accent)}
+.pw-box button{width:100%;padding:14px;border:none;border-radius:8px;background:var(--accent);color:#fff;font-family:var(--font-body);font-size:14px;font-weight:600;cursor:pointer;transition:0.3s}
+.pw-box button:hover{background:var(--accent-light)}
+.pw-error{font-size:13px;color:#c0392b;margin-top:8px;display:none}
+
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:120px 24px 60px;position:relative;overflow:hidden;background:#000}
+.hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:0.7}
+.hero::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(45,32,36,0.35) 0%,rgba(45,32,36,0.55) 100%);z-index:1}
+.hero-inner{max-width:700px;position:relative;z-index:2}
+.hero-tag{font-size:12px;text-transform:uppercase;letter-spacing:4px;color:rgba(255,255,255,0.8);margin-bottom:20px;font-weight:500}
+.hero h1{font-family:var(--font-display);font-size:clamp(44px,8vw,80px);font-weight:400;line-height:1.1;margin-bottom:16px;color:#fff}
+.hero h1 .amp{font-style:italic;color:var(--accent-light);font-size:0.65em;margin:0 8px}
+.hero-date{font-size:16px;color:rgba(255,255,255,0.85);letter-spacing:2px}
+.hero-venue{font-size:14px;color:rgba(255,255,255,0.7);margin-top:4px}
+.hero-countdown{display:flex;justify-content:center;gap:24px;margin-top:32px}
+.cd-item{text-align:center}
+.cd-num{font-family:var(--font-display);font-size:36px;color:#fff;line-height:1}
+.cd-lbl{font-size:10px;text-transform:uppercase;letter-spacing:2px;color:rgba(255,255,255,0.7);margin-top:4px}
+
+.section{padding:80px 24px;max-width:900px;margin:0 auto}
+.section.alt{background:var(--surface);max-width:100%}
+.section.alt .section-inner{max-width:900px;margin:0 auto}
+.section-title{font-family:var(--font-display);font-size:32px;font-weight:400;text-align:center;margin-bottom:8px}
+.section-sub{font-size:12px;text-transform:uppercase;letter-spacing:3px;color:var(--accent);text-align:center;margin-bottom:48px;font-weight:500}
+
+/* Timeline */
+.timeline{position:relative;padding-left:40px}
+.timeline::before{content:'';position:absolute;left:15px;top:0;bottom:0;width:1px;background:var(--border)}
+.tl-item{position:relative;margin-bottom:36px}
+.tl-dot{position:absolute;left:-40px;top:4px;width:30px;height:30px;border-radius:50%;background:var(--accent-soft);border:2px solid var(--accent);display:flex;align-items:center;justify-content:center}
+.tl-dot svg{stroke:var(--accent);width:14px;height:14px}
+.tl-time{font-size:12px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:2px;margin-bottom:4px}
+.tl-title{font-family:var(--font-display);font-size:20px;margin-bottom:4px}
+.tl-desc{font-size:14px;color:var(--text-muted)}
+
+.info-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.info-card{padding:28px;background:var(--surface);border:1px solid var(--border);border-radius:12px}
+.info-card h3{font-family:var(--font-display);font-size:20px;margin-bottom:8px}
+.info-card p{font-size:14px;color:var(--text-muted);line-height:1.7}
+.map-wrapper{border-radius:12px;overflow:hidden;margin-top:32px;border:1px solid var(--border);height:280px}
+.map-wrapper iframe{width:100%;height:100%;border:0}
+
+.party-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.party-card{text-align:center}
+.party-avatar{width:80px;height:80px;border-radius:50%;background:var(--accent-soft);border:2px solid var(--border);margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:24px;color:var(--accent)}
+.party-card h4{font-size:15px;font-weight:600;margin-bottom:2px}
+.party-card p{font-size:12px;color:var(--text-muted)}
+
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+.col-card{padding:32px;background:var(--surface);border:1px solid var(--border);border-radius:12px;text-align:center}
+.col-card h3{font-family:var(--font-display);font-size:22px;margin-bottom:12px}
+.col-card p{font-size:14px;color:var(--text-muted);line-height:1.7}
+
+/* RSVP Form */
+.rsvp-form{max-width:520px;margin:0 auto}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-group{margin-bottom:20px}
+.form-group label{display:block;font-size:12px;text-transform:uppercase;letter-spacing:2px;color:var(--text-muted);margin-bottom:8px;font-weight:500}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:14px 16px;border:1px solid var(--border);border-radius:8px;font-family:var(--font-body);font-size:14px;background:var(--bg);color:var(--text);transition:0.3s;outline:none}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(181,100,122,0.1)}
+.form-group textarea{resize:vertical;min-height:80px}
+.radio-group{display:flex;gap:24px;margin-top:4px}
+.radio-group label{display:flex;align-items:center;gap:8px;font-size:14px;text-transform:none;letter-spacing:0;cursor:pointer;color:var(--text)}
+.radio-group input[type="radio"]{width:18px;height:18px;accent-color:var(--accent)}
+.submit-btn{width:100%;padding:16px;border:none;border-radius:8px;background:var(--accent);color:#fff;font-family:var(--font-body);font-size:14px;font-weight:600;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:0.3s}
+.submit-btn:hover{background:var(--accent-light);box-shadow:0 4px 20px rgba(181,100,122,0.3)}
+
+/* Gallery */
+.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.gallery-grid .g-item{aspect-ratio:1;border-radius:8px;overflow:hidden;cursor:pointer;transition:0.3s;border:1px solid var(--border)}
+.gallery-grid .g-item:hover{transform:scale(1.03);box-shadow:0 4px 20px rgba(0,0,0,0.08)}
+.gallery-grid .g-item img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.4s}
+.gallery-grid .g-item:hover img{transform:scale(1.08)}
+.lightbox{position:fixed;inset:0;z-index:300;background:rgba(0,0,0,0.9);display:none;align-items:center;justify-content:center;padding:40px;cursor:pointer}
+.lightbox.active{display:flex}
+.lightbox img{max-width:90%;max-height:90vh;border-radius:8px;object-fit:contain}
+
+/* Guestbook */
+.gb-entries{max-width:600px;margin:0 auto 32px}
+.gb-entry{padding:20px;background:var(--surface);border:1px solid var(--border);border-radius:12px;margin-bottom:12px}
+.gb-entry .gb-author{font-weight:600;font-size:14px;margin-bottom:4px}
+.gb-entry .gb-date{font-size:11px;color:var(--text-muted);margin-bottom:8px}
+.gb-entry .gb-text{font-size:14px;color:var(--text-muted);line-height:1.6;font-style:italic}
+.gb-form{max-width:500px;margin:0 auto}
+
+/* Thank You */
+.thankyou-section{text-align:center;padding:80px 24px;background:var(--accent-soft)}
+.thankyou-section h2{font-family:var(--font-display);font-size:36px;margin-bottom:12px;color:var(--accent)}
+.thankyou-section p{font-size:16px;color:var(--text-muted);max-width:500px;margin:0 auto;line-height:1.8}
+
+.site-footer{padding:40px 24px;text-align:center;border-top:1px solid var(--border)}
+.footer-names{font-family:var(--font-display);font-size:24px;color:var(--accent);margin-bottom:8px}
+.site-footer p{font-size:12px;color:var(--text-muted)}
+.demo-banner{font-size:11px;color:var(--text-muted);margin-top:16px}
+.demo-banner a{color:var(--accent);font-weight:600}
+
+@media(max-width:768px){.info-grid,.two-col{grid-template-columns:1fr}.party-grid{grid-template-columns:repeat(2,1fr)}.form-row{grid-template-columns:1fr}.gallery-grid{grid-template-columns:repeat(2,1fr)}.nav-inner{gap:12px}}
+</style>
+</head>
+<body>
+
+<!-- Password Overlay -->
+<div class="pw-overlay" id="pwOverlay">
+<div class="pw-box">
+<h2>Passwortschutz</h2>
+<p>Diese Webseite ist privat. Bitte geben Sie das Passwort ein, das Sie mit der Einladung erhalten haben.</p>
+<input type="password" id="pwInput" placeholder="Passwort eingeben" autofocus>
+<button onclick="checkPw()">Zugang erhalten</button>
+<div class="pw-error" id="pwError">Falsches Passwort. Bitte versuchen Sie es erneut.</div>
+<p style="font-size:11px;color:var(--text-muted);margin-top:16px">Demo-Passwort: <strong>liebe2025</strong></p>
+</div>
+</div>
+
+<div class="back-bar"><a href="index.html"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Zurück zur Paketübersicht</a></div>
+
+<nav class="site-nav"><div class="nav-inner">
+<a href="#home">Home</a><a href="#timeline">Tagesablauf</a><a href="#anreise">Anreise</a><a href="#party">Trauzeugen</a><a href="#details">Details</a><a href="#rsvp">RSVP</a><a href="#gallery">Galerie</a><a href="#guestbook">Gästebuch</a>
+</div></nav>
+
+<section class="hero" id="home">
+<video class="hero-video" autoplay muted loop playsinline preload="auto">
+<source src="images/hero-video.mp4" type="video/mp4">
+</video>
+<div class="hero-inner">
+<div class="hero-tag">Wir heiraten</div>
+<h1>Isabella <span class="amp">&amp;</span> David</h1>
+<div class="hero-date">Samstag, 12. April 2025</div>
+<div class="hero-venue">Botanischer Garten, Luzern</div>
+<div class="hero-countdown">
+<div class="cd-item"><div class="cd-num" id="cdDays">--</div><div class="cd-lbl">Tage</div></div>
+<div class="cd-item"><div class="cd-num" id="cdHours">--</div><div class="cd-lbl">Stunden</div></div>
+<div class="cd-item"><div class="cd-num" id="cdMinutes">--</div><div class="cd-lbl">Minuten</div></div>
+<div class="cd-item"><div class="cd-num" id="cdSeconds">--</div><div class="cd-lbl">Sekunden</div></div>
+</div>
+</div>
+</section>
+
+<section class="section alt" id="timeline"><div class="section-inner">
+<h2 class="section-title">Tagesablauf</h2>
+<div class="section-sub">Samstag, 12. April 2025</div>
+<div class="timeline">
+<div class="tl-item"><div class="tl-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div class="tl-time">13:00 Uhr</div><div class="tl-title">Empfang</div><div class="tl-desc">Willkommen im Botanischen Garten</div></div>
+<div class="tl-item"><div class="tl-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div><div class="tl-time">14:00 Uhr</div><div class="tl-title">Trauung</div><div class="tl-desc">Freie Zeremonie im Rosengarten</div></div>
+<div class="tl-item"><div class="tl-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8zM6 1v3M10 1v3M14 1v3"/></svg></div><div class="tl-time">15:30 Uhr</div><div class="tl-title">Apéro</div><div class="tl-desc">Drinks und Häppchen im Gewächshaus</div></div>
+<div class="tl-item"><div class="tl-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/></svg></div><div class="tl-time">18:00 Uhr</div><div class="tl-title">Dinner</div><div class="tl-desc">4-Gang-Menü im Orangerie-Saal</div></div>
+<div class="tl-item"><div class="tl-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></div><div class="tl-time">21:00 Uhr</div><div class="tl-title">Party</div><div class="tl-desc">Liveband, Eröffnungstanz und Feier bis in die Nacht</div></div>
+</div>
+</div></section>
+
+<section class="section" id="anreise">
+<h2 class="section-title">Anreise & Unterkunft</h2>
+<div class="section-sub">So findet ihr uns</div>
+<div class="info-grid">
+<div class="info-card"><h3>Mit dem Auto</h3><p>Botanischer Garten, Lidostrasse 5, 6006 Luzern. Parkplätze am Lido Parkhaus (3 Min.).</p></div>
+<div class="info-card"><h3>Mit dem ÖV</h3><p>Bus Nr. 6/8 ab Bahnhof Luzern, Haltestelle «Verkehrshaus». Ca. 10 Minuten.</p></div>
+<div class="info-card"><h3>Übernachtung</h3><p>Kontingent im Hotel Schweizerhof Luzern. Stichwort «Isabella & David». Bucht bis 1. März.</p></div>
+<div class="info-card"><h3>Shuttle</h3><p>Shuttle-Service ab 0:30 Uhr zu allen Hotels in Luzern. Details am Empfang.</p></div>
+</div>
+<div class="map-wrapper"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2723!2d8.33!3d47.05!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2z0!5e0!3m2!1sde!2sch!4v1" allowfullscreen loading="lazy"></iframe></div>
+</section>
+
+<section class="section alt" id="party"><div class="section-inner">
+<h2 class="section-title">Unsere Trauzeugen</h2>
+<div class="section-sub">Die wichtigsten Menschen an unserem Tag</div>
+<div class="party-grid">
+<div class="party-card"><div class="party-avatar">SM</div><h4>Sofia Müller</h4><p>Trauzeugin</p></div>
+<div class="party-card"><div class="party-avatar">LB</div><h4>Lena Brunner</h4><p>Brautjungfer</p></div>
+<div class="party-card"><div class="party-avatar">NF</div><h4>Nico Fischer</h4><p>Trauzeuge</p></div>
+<div class="party-card"><div class="party-avatar">PH</div><h4>Patrick Huber</h4><p>Trauzeuge</p></div>
+</div>
+</div></section>
+
+<section class="section" id="details">
+<h2 class="section-title">Gut zu wissen</h2>
+<div class="section-sub">Dresscode & Geschenkwünsche</div>
+<div class="two-col">
+<div class="col-card"><h3>Dresscode</h3><p>Garden Party Chic. Elegante Outfits in Pastelltönen erwünscht. Denkt an bequeme Schuhe für den Garten.</p></div>
+<div class="col-card"><h3>Geschenkwünsche</h3><p>Das grösste Geschenk ist eure Anwesenheit. Wer möchte, darf gerne zu unserer Flitterwochen-Reise nach Bali beitragen.</p></div>
+</div>
+</section>
+
+<section class="section alt" id="rsvp"><div class="section-inner">
+<h2 class="section-title">RSVP</h2>
+<div class="section-sub">Bitte antwortet bis zum 1. März 2025</div>
+<form class="rsvp-form" onsubmit="event.preventDefault();alert('Vielen Dank! (Demo)');">
+<div class="form-row"><div class="form-group"><label for="dName">Vorname</label><input type="text" id="dName" placeholder="Vorname" required></div><div class="form-group"><label for="dLast">Nachname</label><input type="text" id="dLast" placeholder="Nachname" required></div></div>
+<div class="form-group"><label for="dEmail">E-Mail</label><input type="email" id="dEmail" placeholder="E-Mail" required></div>
+<div class="form-group"><label>Teilnahme</label><div class="radio-group"><label><input type="radio" name="attend" value="yes" required> Ich komme gerne</label><label><input type="radio" name="attend" value="no"> Leider nicht</label></div></div>
+<div class="form-row"><div class="form-group"><label for="dGuests">Anzahl Gäste</label><select id="dGuests"><option>1 Person</option><option>2 Personen</option><option>3 Personen</option></select></div><div class="form-group"><label for="dMenu">Menüwahl</label><select id="dMenu"><option>Fleisch</option><option>Fisch</option><option>Vegetarisch</option><option>Vegan</option></select></div></div>
+<div class="form-group"><label for="dAllergy">Allergien</label><input type="text" id="dAllergy" placeholder="z.B. Laktose, Gluten..."></div>
+<div class="form-group"><label for="dMsg">Nachricht</label><textarea id="dMsg" placeholder="Eure Nachricht an uns..."></textarea></div>
+<button type="submit" class="submit-btn">Antwort absenden</button>
+</form>
+</div></section>
+
+<!-- Thank You Card -->
+<section class="thankyou-section">
+<h2>Danke!</h2>
+<p>Nach der Hochzeit wird diese Seite in eine digitale Dankeskarte umgewandelt – mit den schönsten Momenten unseres Tages.</p>
+</section>
+
+<!-- Photo Gallery -->
+<section class="section" id="gallery">
+<h2 class="section-title">Fotogalerie</h2>
+<div class="section-sub">Passwortgeschützt – nur für unsere Gäste</div>
+<div class="gallery-grid">
+<div class="g-item" onclick="openLB(this)"><img src="images/gallery1.png" alt="Trauung"></div>
+<div class="g-item" onclick="openLB(this)"><img src="images/gallery2.png" alt="Brautpaar"></div>
+<div class="g-item" onclick="openLB(this)"><img src="images/gallery3.png" alt="Eröffnungstanz"></div>
+<div class="g-item" onclick="openLB(this)"><img src="images/gallery4.png" alt="Brautstrauss"></div>
+<div class="g-item" onclick="openLB(this)"><img src="images/gallery5.png" alt="Hochzeitstorte"></div>
+<div class="g-item" onclick="openLB(this)"><img src="images/gallery6.png" alt="Eheringe"></div>
+<div class="g-item" onclick="openLB(this)"><img src="images/gallery7.png" alt="Tischdekoration"></div>
+<div class="g-item" onclick="openLB(this)"><img src="images/gallery8.png" alt="Gäste"></div>
+<div class="g-item" onclick="openLB(this)"><img src="images/gallery9.png" alt="Sonnenuntergang"></div>
+</div>
+<div class="lightbox" id="lightbox" onclick="this.classList.remove('active')"><img id="lbImg" src="" alt=""></div>
+</section>
+
+<!-- Guestbook -->
+<section class="section alt" id="guestbook"><div class="section-inner">
+<h2 class="section-title">Gästebuch</h2>
+<div class="section-sub">Hinterlasst uns eine Nachricht</div>
+<div class="gb-entries">
+<div class="gb-entry"><div class="gb-author">Laura & Thomas</div><div class="gb-date">14. April 2025</div><div class="gb-text">Was für ein wunderschöner Tag! Wir sind so glücklich für euch beide. Alles Liebe für eure gemeinsame Zukunft!</div></div>
+<div class="gb-entry"><div class="gb-author">Familie Brunner</div><div class="gb-date">13. April 2025</div><div class="gb-text">Die schönste Hochzeit, die wir je erleben durften. Danke, dass wir dabei sein durften!</div></div>
+</div>
+<form class="gb-form" onsubmit="event.preventDefault();alert('Eintrag gespeichert! (Demo)');">
+<div class="form-group"><label for="gbName">Euer Name</label><input type="text" id="gbName" placeholder="Vor- und Nachname" required></div>
+<div class="form-group"><label for="gbMsg">Eure Nachricht</label><textarea id="gbMsg" placeholder="Schreibt uns eine Nachricht..." required></textarea></div>
+<button type="submit" class="submit-btn">Eintrag senden</button>
+</form>
+</div></section>
+
+<footer class="site-footer">
+<div class="footer-names">Isabella & David</div>
+<p>12. April 2025 &middot; Luzern</p>
+<div class="demo-banner">Dies ist eine Demo-Webseite &middot; <a href="index.html">Paket Deluxe</a> von Gross ICT</div>
+</footer>
+
+<script>
+function openLB(el){var img=el.querySelector('img');document.getElementById('lbImg').src=img.src;document.getElementById('lightbox').classList.add('active')}
+function checkPw(){var p=document.getElementById('pwInput').value;if(p==='liebe2025'){document.getElementById('pwOverlay').classList.add('hidden')}else{document.getElementById('pwError').style.display='block'}}
+document.getElementById('pwInput').addEventListener('keydown',function(e){if(e.key==='Enter')checkPw()});
+function updateCountdown(){var w=new Date('2025-04-12T14:00:00'),n=new Date(),d=w-n;if(d<=0){document.querySelectorAll('.cd-num').forEach(function(e){e.textContent='0'});return}document.getElementById('cdDays').textContent=Math.floor(d/86400000);document.getElementById('cdHours').textContent=Math.floor((d%86400000)/3600000);document.getElementById('cdMinutes').textContent=Math.floor((d%3600000)/60000);document.getElementById('cdSeconds').textContent=Math.floor((d%60000)/1000)}
+updateCountdown();setInterval(updateCountdown,1000);
+</script>
+</body>
+</html>
